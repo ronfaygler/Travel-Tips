@@ -1,0 +1,39 @@
+
+.topnav {
+    top:0;
+    width: 100%;
+    background-color: #4e63bf;
+    overflow: hidden;
+    position: fixed;
+    text-align:right;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: right;
+    color: #f2f2f2;
+    text-align: right;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #2e1995;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: #9d9e9d;
+    color: black;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    /* .topnav {padding: 8px;} */
+    .topnav a {font-size: 15px;}
+  }
+  
+  
