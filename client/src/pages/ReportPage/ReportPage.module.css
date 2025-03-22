@@ -1,0 +1,30 @@
+/* .layoutContainer{
+    padding: 
+} */
+.img {
+    display: block; /* Ensures the image takes up a full line */
+    margin: 0 auto; /* Centers horizontally */
+    border-style: none;
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+}
+
+  .title {
+    text-align: center;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+  }
+  
+  .content {
+    text-align: right;
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: 400;
+    color: #4a4a4a;
+    /* margin: 0px 10%; */
+    /* padding-right: 20px; Adjust the value as needed */
+
+  }
+  

@@ -1,28 +1,15 @@
-// import React, { useEffect, useState } from 'react' 
-// import { Link } from "react-router-dom";
-import styles from './Home.module.css'
-import Header from '../../components/Header'
+import styles from './Home.module.css';
+import { useContext } from 'react';
+import { ReportContext } from '../../context/ReportContext/ReportContext';
+import ShowReports from "../../components/Reports/ShowReports/ShowReports";
 
 function Home() {
-    
-//   const [backendData, setBackendData] = useState([{}])
-
-//   useEffect(() => {
-//     fetch("/api").then(
-//       response => response.json()
-//     ).then(
-//       data => {
-//         setBackendData(data)
-//       }
-    // )
-    
-//   }, [])
+  const { reports, loading, error } = useContext(ReportContext);
 
   return (
-      <div> 
-      <header className="bg-blue-500 text-white p-4 shadow-md">
+      <div className={styles}> 
         <h1>טיפים לטיולים!</h1>
-      </header>
+      <ShowReports reports={reports} loading={loading} error={error}/>
     </div>
   )
 }

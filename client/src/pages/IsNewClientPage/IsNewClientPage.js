@@ -1,6 +1,6 @@
 import React, { createContext, useContext , useEffect, useState } from 'react' 
 import { Link, useNavigate } from "react-router-dom";
-import { useIsNewContext } from '../../context/IsNewContext';
+import { useIsNewContext } from '../../context/InsuranceContext/IsNewContext';
 
 function New_Client_Ins() {
     const navigate = useNavigate();

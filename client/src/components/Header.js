@@ -16,9 +16,17 @@ const Header = () => {
             />        
         </a>
         <Link to="/getinsurance" className="hover:underline">ביטוח נסיעות</Link>
-        <a href="/creditcards" className="hover:underline">כרטיסי אשראי</a>
+
+        <Link to="/כרטיסי אשראי" className="hover:underline">כרטיסי אשראי</Link>
+        <Link to="/נקודות" className="hover:underline">נקודות</Link>
+        <Link to="/מלונות" className="hover:underline">מלונות</Link>
+        <Link to="/חדשות" className="hover:underline">חדשות</Link>
+
         <a href="/about" className="hover:underline">קצת עלינו</a>
-        <a href="/contactus" className="hover:underline">צור קשר</a>
+        <a href="/contact-us" className="hover:underline">צור קשר</a>
+
+        <Link to="/כתבה-חדשה" className="hover:underline">הוסף כתבה</Link>
+
       </div>
     </nav>
   );
