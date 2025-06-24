@@ -28,14 +28,31 @@ const SingleReport = ({ report }) => {
     return (
         <div className={styles.reportCard}>
             <Link
-            to={`/report/${report.title}`} 
-            state={{ report }}
-            className={styles.report_link}
+                to={`/report/${report._id}`} 
+                state={{ report }}
+                className={styles.report_link}
             >
-            <img src={report.image} alt={report.title} className={styles.reportImage} />
-            <p1>{timeAgo(report.updatedAt)} </p1> | <p2> {report.writer} </p2>
-            <h3>{report.title}</h3>
-            <p>{report.shortDescription}</p>
+                <img 
+                    src={report.mainImage ? `${process.env.REACT_APP_API_URL}/${report.mainImage.replace(/\\/g, "/")}` : ''} 
+                    alt={report.title}
+                    className={styles.reportImage}
+                    onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        console.error(`Failed to load main image ${report.mainImage}`);
+                    }}
+                    loading="lazy"
+                />
+                <div className={styles.content}>
+                    <div className={styles.metaContainer}>
+                        <span className={styles.meta}>{timeAgo(report.updatedAt)}</span>
+                        <span className={styles.writer}>{report.writer}</span>
+                    </div>
+                    <h3 className={styles.title}>{report.title}</h3>
+                    <p className={styles.description}>{report.shortDescription}</p>
+                    <Link to={`/update-report/${report._id}`}>
+                        <span className={styles.updateReport}>עריכה</span>
+                    </Link>
+                </div>
             </Link>
         </div>
     )

@@ -9,6 +9,7 @@ import AboutPage from "./pages/AboutPage/AboutPage";
 import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 import ReportPage from "./pages/ReportPage/ReportPage";
 import ReportsByCategoryPage from "./pages/ReportsByCategoryPage/ReportsByCategoryPage";
+import UpdateReportPage from "./pages/UpdateReportPage/UpdateReportPage";
 
 import CountryPage from "./pages/CountryPage/CountryPage";
 import DatesPage from "./pages/DatesPage/DatesPage";
@@ -36,9 +37,9 @@ function App() {
                   <Route path="/about" exact Component={AboutPage} />
                   <Route path="/contact-us" exact Component={ContactUsPage} />
                   
-                  <Route path="/report/:title" exact Component={ReportPage} />
+                  <Route path="/report/:id" exact Component={ReportPage} />
                   <Route path="/:category" exact Component={ReportsByCategoryPage} />
-                  
+                  <Route path="/update-report/:id" exact Component={UpdateReportPage} /> 
                   <Route path="/כתבה-חדשה" exact Component={UploadReport} />
 
                   <Route path="/getinsurance" exact Component={CountryPage} />

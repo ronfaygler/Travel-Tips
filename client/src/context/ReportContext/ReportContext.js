@@ -7,6 +7,10 @@ const ReportProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null);
     
+    // useEffect(() => {
+    //     console.log("✅ Updated reports:", reports);
+    //   }, [reports]);
+
     useEffect(() => {
         const fetchAllReports = async () => {
             try {
@@ -26,9 +30,13 @@ const ReportProvider = ({ children }) => {
     const addNewReport = (report) => {
         setReports([...reports, report]);
     }
+    
+    const updateReport = (id, updatedReport) => {
+        setReports(reports.map(report => report._id === id ? updatedReport : report));
+    }
 
     return (
-        <ReportContext.Provider value={{ reports, loading, error, addNewReport}}>
+        <ReportContext.Provider value={{ reports, loading, error, addNewReport, updateReport}}>
             {children}
         </ReportContext.Provider>
     )

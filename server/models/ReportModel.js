@@ -4,11 +4,11 @@ const reportSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true, // Optional: trims whitespace around the title
+    trim: true,
   },
-  image: {
-    type: String, // You can store the image URL or path if you're not storing it as binary data
-    required: true,
+  mainImage: {
+    type: String,
+    required: false,
   },
   content: {
     type: String,
@@ -27,6 +27,10 @@ const reportSchema = new mongoose.Schema({
     required: true,
     enum: ["חדשות","מלונות", "נקודות", "כרטיסי אשראי"],
   },
+  images: {
+    type: [String],
+    required: false, 
+  }
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });

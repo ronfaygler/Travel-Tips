@@ -22,6 +22,9 @@ app.use((req, res, next) => {
     next()
 })
 
+// Serve uploaded files
+app.use('/api/uploads', express.static('uploads'))
+
 app.use("/api/reports", reportRoutes)
 
 //connect to db

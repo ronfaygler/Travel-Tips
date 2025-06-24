@@ -12,7 +12,7 @@ const Header = () => {
             <img 
                 src={logo} 
                 alt="Logo" 
-                style={{ height: '2rem', width: 'auto' }} // Set height directly
+                style={{ height: '1rem', width: 'auto' }} // Set height directly
             />        
         </a>
         <Link to="/getinsurance" className="hover:underline">ביטוח נסיעות</Link>
