@@ -19,8 +19,12 @@ const createReport = async (req, res) => {
     try {        
         // Handle file uploads
         const mainImage = req.files?.mainImage?.[0] ? req.files.mainImage[0].path : null;
-        const images = req.files?.images?.map(file => file.path) || [];
-
+        // const images = req.files?.images?.map(file => file.path) || [];
+        const images = req.files?.images?.map(file => ({
+            name: file.path
+        }));
+        // const images = req.files?.images || [];
+        console.log("images in controller: ", images);
         // Validate required fields
         if (!req.body.title || !req.body.content || !req.body.shortDescription || !req.body.writer || !req.body.category) {
             return res.status(400).json({ error: 'Missing required fields' });
@@ -47,9 +51,41 @@ const updateReport = async (req, res) => {
         const { id } = req.params;
         const body = req.body;
 
-        // Handle images
+        // Handle main image
         const mainImage = req.files?.mainImage?.[0]?.path || body.mainImage;
-        const images = req.files?.images?.map(file => file.path) || [];
+
+        // Get existing image names from the request
+        const existingImageNames = Array.isArray(body.existingImageNames) 
+            ? body.existingImageNames
+            : body.existingImageNames 
+                ? [body.existingImageNames]
+                : [];
+
+        // Handle new uploaded images
+        const newImagePaths = req.files?.images?.map(file => file.path) || [];
+
+        // Get existing report to preserve image IDs
+        const existingReport = await Report.findById(id);
+        if (!existingReport) {
+            return res.status(404).json({ error: 'Report not found' });
+        }
+
+        // Create existing images array with both name and _id
+        const existingImages = existingImageNames.map(name => {
+            const existingImage = existingReport.images.find(img => img.name === name);
+            return existingImage ? {
+                name: existingImage.name,
+                _id: existingImage._id
+            } : { name };
+        });
+
+        // Create new images array
+        const newImages = newImagePaths.map(path => ({
+            name: path
+        }));
+
+        // Combine existing and new images
+        const allImages = [...existingImages, ...newImages];
 
         const updatedFields = {
             title: body.title,
@@ -58,7 +94,7 @@ const updateReport = async (req, res) => {
             writer: body.writer,
             shortDescription: body.shortDescription,
             mainImage,
-            images: images.length ? images : undefined,
+            images: allImages
         };
 
         const updatedReport = await Report.findByIdAndUpdate(id, updatedFields, { new: true });

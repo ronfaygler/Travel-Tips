@@ -11,11 +11,13 @@ const ReportPage = () => {
   const renderContentWithImages = () => {
     if (!report?.content) return null;
     const parts = report.content.split(/\[(\d+)\]/);
+    console.log("report.images: ", report.images);
     return parts.map((part, index) => {
         if (index % 2 === 1) {
             const imgIndex = parseInt(part, 10);
             // Get the image path from the database
-            const imagePath = report.images?.[imgIndex];
+            const imageObj = report.images?.[imgIndex];
+            const imagePath = imageObj?.name || null;
             console.log('Image path:', imagePath);
             
             // Construct the full URL

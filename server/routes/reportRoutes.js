@@ -55,7 +55,6 @@ router.post(
     createReport
 );
 
-// router.put('/update-report/:id', updateReport);
 router.put(
     '/update-report/:id',
     upload.fields([
