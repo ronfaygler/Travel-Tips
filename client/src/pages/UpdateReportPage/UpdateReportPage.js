@@ -131,29 +131,29 @@ const UpdateReportPage = () => {
 
     const getContentWithImages = () => {
         // Create the main image HTML
-        let html = '';
+        let html = `<h2>${title}</h2>`;
         if (mainImage) {
             const mainImageUrl = mainImage instanceof File 
                 ? URL.createObjectURL(mainImage)
                 : `${process.env.REACT_APP_API_URL}/${mainImage}`;
-            html = `<div class="${styles.mainImagePreview}">
-                        <img src="${mainImageUrl}" alt="Main Image" style="max-width: 100%; margin: 10px 0;" />
+            html += `<div style="max-width: 50%; margin: 10px 0;">
+                        <img src="${mainImageUrl}" alt="Main Image" style="max-width: 100%; height: auto;" />
                     </div>`;
         }
 
         // Add content
-        html += content;
+        html += `<div>${content}</div>`;
 
         // Add existing images
         existingImages.forEach((image, id) => {
             const url = `${process.env.REACT_APP_API_URL}/${image.name}`;
-            html = html.replaceAll(`[${id}]`, `<img src="${url}" style="max-width: 100%; margin: 10px 0;" />`);
+            html = html.replaceAll(`[${id + 1}]`, `<img src="${url}" style="max-width: 100%; margin: 10px 0;" />`);
         });
         
         // Add new images
         newImages.forEach((image, id) => {
             const url = URL.createObjectURL(image);
-            html = html.replaceAll(`[${id + existingImages.length}]`, `<img src="${url}" style="max-width: 100%; margin: 10px 0;" />`);
+            html = html.replaceAll(`[${id + existingImages.length + 1}]`, `<img src="${url}" style="max-width: 100%; margin: 10px 0;" />`);
         });
         
         // Clean up any unused image URLs

@@ -63,12 +63,28 @@ const UploadReport = () => {
     };
 
     const getContentWithImages = () => {
-        let html = content;
+        // Create the main image HTML
+        let html = `<h2>${title}</h2>`;
+        if (mainImage) {
+            const mainImageUrl = mainImage instanceof File 
+                ? URL.createObjectURL(mainImage)
+                : `${process.env.REACT_APP_API_URL}/${mainImage}`;
+            html += `<div style="max-width: 50%; margin: 10px 0;">
+                        <img src="${mainImageUrl}" alt="Main Image" style="max-width: 100%; height: auto;" />
+                    </div>`;
+        }
+
+        // Add content
+        html += `<div>${content}</div>`;
+        
+        // Add images
         images.forEach((file, id) => {
             const url = URL.createObjectURL(file);
             html = html.replaceAll(`[${id}]`, `<img src="${url}" style="max-width: 100%; margin: 10px 0;" />`);
         });
-        return html;
+        
+        // Clean up any unused image URLs
+        return html.replace(/<img[^>]*>\s*\[\d+\]\s*<\/img>/g, '');
     };
     
     return (
