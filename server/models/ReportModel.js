@@ -28,8 +28,15 @@ const reportSchema = new mongoose.Schema({
     enum: ["חדשות","מלונות", "נקודות", "כרטיסי אשראי"],
   },
   images: {
-    type: [String],
-    required: false, 
+    type: [
+      {
+        name: {
+          type: String,
+          required: true
+        }
+      }
+    ],
+    required: false
   }
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields

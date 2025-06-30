@@ -16,6 +16,12 @@ const UploadReport = () => {
     const [successMessage, setSuccessMessage] = useState(null);
 
 
+    const handleRemoveNewImage = (name) => {
+        console.log("removing image with name: ", name);
+        setImages(prev => prev.filter((image) => image.name !== name));
+        console.log("images after remove: ", images);
+    };
+    
     const handleReset = () => {
         setTitle("");
         setMainImage("");
@@ -40,12 +46,12 @@ const UploadReport = () => {
 
         // Append each additional content image
         images.forEach((imgFile) => {
-            console.log('Uploading image:', imgFile.name);
             formData.append('images', imgFile);
         });
+        // console.log("images in upload: ", images);
         
         try {
-            const report = await newReport(formData); // Assuming this function handles FormData
+            const report = await newReport(formData); 
             addNewReport(report);
             handleReset();
             setError(null);
@@ -57,12 +63,28 @@ const UploadReport = () => {
     };
 
     const getContentWithImages = () => {
-        let html = content;
-        images.forEach((file, index) => {
+        // Create the main image HTML
+        let html = `<h2>${title}</h2>`;
+        if (mainImage) {
+            const mainImageUrl = mainImage instanceof File 
+                ? URL.createObjectURL(mainImage)
+                : `${process.env.REACT_APP_API_URL}/${mainImage}`;
+            html += `<div style="max-width: 50%; margin: 10px 0;">
+                        <img src="${mainImageUrl}" alt="Main Image" style="max-width: 100%; height: auto;" />
+                    </div>`;
+        }
+
+        // Add content
+        html += `<div>${content}</div>`;
+        
+        // Add images
+        images.forEach((file, id) => {
             const url = URL.createObjectURL(file);
-            html = html.replaceAll(`[${index}]`, `<img src="${url}" style="max-width: 100%; margin: 10px 0;" />`);
+            html = html.replaceAll(`[${id}]`, `<img src="${url}" style="max-width: 100%; margin: 10px 0;" />`);
         });
-        return html;
+        
+        // Clean up any unused image URLs
+        return html.replace(/<img[^>]*>\s*\[\d+\]\s*<\/img>/g, '');
     };
     
     return (
@@ -86,14 +108,35 @@ const UploadReport = () => {
                         className={styles.input} 
                     />
                 </label>
-
+                <div className={styles.imagePreviewContainer}>
+                    {/* New images preview */}
+                    {images.map((image) => (
+                        <div key={image.name} className={styles.imagePreview}>
+                            <img 
+                                src={URL.createObjectURL(image)} 
+                                alt={`new-${image.name}`}
+                                className={styles.previewImage}
+                            />
+                            <button 
+                                onClick={() => handleRemoveNewImage(image.name)}
+                                className={styles.deleteButton}
+                            >
+                                ×
+                            </button>
+                        </div>
+                    ))}
+                </div>
                 <label className={styles.label}>
                     העלאת תמונות לתוכן:
                     <input 
                         type="file" 
                         accept="image/*" 
                         multiple 
-                        onChange={(e) => setImages(Array.from(e.target.files))} 
+                        onChange={(e) => {
+                            const files = Array.from(e.target.files);
+                            setImages(prev => [...prev, ...files]);
+                            // setImages(Array.from(e.target.files))
+                        }} 
                         className={styles.input} 
                     />
                 </label>
