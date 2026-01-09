@@ -1,81 +1,105 @@
 import { useParams, useLocation, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import styles from "./ReportPage.module.css";
-import React from 'react';
+import AddCommentReport from '../../components/Reports/commentReport/AddCommentReport';
+import CommentsReport from '../../components/Reports/commentReport/commentsReport';
 
 const ReportPage = () => {
     const location = useLocation();
-    const { report } = location.state;
-  if (!report) {
-    return <h1>הכתבה לא נמצאה</h1>;
-  }
-
-  const renderContentWithImages = () => {
-    if (!report?.content) return null;
-    const parts = report.content.split(/\[(\d+)\]/);
-    console.log("report.images: ", report.images);
-    console.log("Split parts:", parts);
-
-    return parts.map((part, index) => {
-        if (index % 2 === 1) {
-            const imgIndex = parseInt(part, 10);
-            // Get the image path from the database
-            const imageObj = report.images?.[imgIndex];
-            const imagePath = imageObj?.name || null;
-            console.log('Image path:', imagePath);
-            
-            // Construct the full URL
-            const imgSrc = imagePath 
-                ? `${process.env.REACT_APP_API_URL}/${imagePath.replace(/\\/g, "/")}`
-                : null;
-            
-            if (imgSrc) {
-                return (
-                    <img 
-                        key={index} 
-                        src={imgSrc} 
-                        alt={`image-${imgIndex}`} 
-                        className={styles.inlineImage}
-                        onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                            console.error(`Failed to load image ${imgSrc}`);
-                        }}
-                    />
-                );
-            }
-            if (imgSrc) {
-                return <img key={index} src={imgSrc} alt={`image-${imgIndex}`} className={styles.inlineImage} />;
-            }
+    const report = location.state?.report;
+    const params = useParams();
+    const [comments, setComments] = useState(report?.comments || []);
+    const [currentReport, setCurrentReport] = useState(report);
+    
+    const handleCommentAdded = (newComments) => {
+        setComments(newComments);
+        // Also update the report state to keep everything in sync
+        if (currentReport) {
+            setCurrentReport({
+                ...currentReport,
+                comments: newComments
+            });
         }
-        // return <span key={index}>{part}</span>;
-        
-        // Split text by newlines and render each line with proper line breaks
-        return <span key={index}>{part.split('\n').map((line, lineIndex) => (
-            <React.Fragment key={lineIndex}>
-                {line}
-                {lineIndex < part.split('\n').length - 1 && <br />}
-            </React.Fragment>
-        ))}</span>;
-    });
-};
+    };
+
+    if (!currentReport) {
+        return <h1>הכתבה לא נמצאה</h1>;
+    }
+
+    const renderContentWithImages = () => {
+        if (!currentReport?.content) return null;
+        const parts = currentReport.content.split(/\[(\d+)\]/);
+        console.log("currentReport.images: ", currentReport.images);
+        console.log("currentReport.comments: ", currentReport.comments);
+        console.log("Split parts:", parts);
+
+        return parts.map((part, index) => {
+            if (index % 2 === 1) {
+                const imgIndex = parseInt(part, 10);
+                // Get the image path from the database
+                const imageObj = currentReport.images?.[imgIndex];
+                const imagePath = imageObj?.name || null;
+                console.log('Image path:', imagePath);
+                
+                // Construct the full URL
+                const imgSrc = imagePath 
+                    ? `${process.env.REACT_APP_API_URL}/${imagePath.replace(/\\/g, "/")}`
+                    : null;
+                
+                if (imgSrc) {
+                    return (
+                        <React.Fragment key={index}>
+                            <br />
+                            <img 
+                                src={imgSrc} 
+                                alt={`image-${imgIndex}`} 
+                                className={styles.inlineImage}
+                                onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                    console.error(`Failed to load image ${imgSrc}`);
+                                }}
+                            />
+                            <br />
+                        </React.Fragment>
+                    );
+                }
+            }
+            return <span key={index}>{part.split('\n').map((line, lineIndex) => (
+                <React.Fragment key={lineIndex}>
+                    {line}
+                    {lineIndex < part.split('\n').length - 1 && <br />}
+                </React.Fragment>
+            ))}</span>;
+        });
+    };
   return (
     <div className={styles.layoutContainer}>
         <div className={styles.topRightLink}>
-            <Link to={`/update-report/${report._id}`}>
+            <Link to={`/update-report/${currentReport._id}`}>
                 <span className={styles.updateReport}>עריכה</span>
             </Link>
         </div>
-        <h1 className={styles.title}>{report.title}</h1>
-        <img src={report?.mainImage ? `${process.env.REACT_APP_API_URL}/${report.mainImage.replace(/\\/g, "/")}` : ''} 
-            alt={report?.title} 
-            className={styles.img}
-            onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                console.error(`Failed to load main image ${report.mainImage}`);
-            }}
-        />
-        <p className={styles.content}>
-            {renderContentWithImages()}
-        </p>
+        <div className='report-content'>
+            <h1 className={styles.title}>{currentReport.title}</h1>
+            <img src={currentReport?.mainImage ? `${process.env.REACT_APP_API_URL}/${currentReport.mainImage.replace(/\\/g, "/")}` : ''} 
+                alt={currentReport?.title} 
+                className={styles.img}
+                onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    console.error(`Failed to load main image ${currentReport.mainImage}`);
+                }}
+            />
+            <p className={styles.content}>
+                {renderContentWithImages()}
+            </p>
+        </div>
+        <div className='report-comments'>
+            <CommentsReport comments={comments} />
+            <AddCommentReport report={currentReport} onCommentAdded={handleCommentAdded} />
+        </div>
+        <div className='report-footer'>
+            <p> 2025 Insurance Company. All rights reserved.</p>
+        </div>
     </div>
     );
 

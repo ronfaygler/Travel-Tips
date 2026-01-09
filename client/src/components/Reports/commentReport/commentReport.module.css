@@ -1,0 +1,120 @@
+/* put in center */
+.addComment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    gap: 10px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.addComment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* put next to each other */
+.inputContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.addComment input {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.addComment button {
+    width: 20%;
+    margin: 20px auto 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+}
+
+.addComment button:hover {
+    background-color: #0056b3;
+}
+
+.comments {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.comments h1 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.comments p {
+    color: #161616;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.comments div {
+    background-color: #fff;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+    transition: box-shadow 0.2s ease;
+}
+
+.comments div:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.comments div:last-child {
+    margin-bottom: 0;
+}
+
+.commentMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.author {
+    font-weight: bold;
+    color: #333;
+}
+
+.email {
+    color: #666;
+    font-size: 0.85em;
+}
+
+.timestamp {
+    color: #999;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.addComment button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}

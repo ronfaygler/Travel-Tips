@@ -1,4 +1,5 @@
 const Report = require("../models/ReportModel")
+const Comment = require("../models/CommentModel")
 const mongoose = require("mongoose")
 const multer = require('multer');
 const path = require('path');
@@ -37,7 +38,8 @@ const createReport = async (req, res) => {
             shortDescription: req.body.shortDescription,
             writer: req.body.writer,
             category: req.body.category,
-            images: images
+            images: images,
+            comments: []
         });
         res.status(201).json({ report });
     } catch (err) {
@@ -118,6 +120,66 @@ const getAllReports = async (req, res) => {
     }
 }
 
+// const getReportById = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         console.log('getReportById called with ID:', id);
+//         const report = await Report.findById(id);
+//         console.log('Found report:', report);
+//         if (!report) {
+//             console.log('Report not found, returning 404');
+//             return res.status(404).json({ error: 'Report not found' });
+//         }
+//         console.log('Returning report with 200');
+//         res.status(200).json(report);
+//     } catch (err) {
+//         console.error('Error fetching report by ID:', err);
+//         res.status(500).json({ error: 'Failed to fetch report', details: err.message });
+//     }
+// }
+
+const addCommentToReport = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { newComment } = req.body;
+        
+        // Validate input
+        if (!newComment || !newComment.text || !newComment.author || !newComment.email) {
+            return res.status(400).json({ error: 'Missing required comment fields' });
+        }
+        
+        const report = await Report.findById(id);
+        if (!report) {
+            return res.status(404).json({ error: 'Report not found' });
+        }
+        
+        // Create new comment document
+        const comment = await Comment.create({
+            text: newComment.text,
+            author: newComment.author,
+            email: newComment.email
+        });
+        
+        // Add comment reference to report
+        if (!report.comments) {
+            report.comments = [];
+        }
+        report.comments.push(comment._id);
+        await report.save();
+        
+        // Get updated report with populated comments
+        const updatedReport = await Report.findById(id).populate('comments');
+        
+        res.status(200).json({ 
+            message: 'Comment added successfully',
+            comments: updatedReport.comments 
+        });
+    } catch (err) {
+        console.error('Error adding comment to report:', err);
+        res.status(500).json({ error: 'Failed to add comment to report', details: err.message });
+    }
+}
+
 const deleteReport = async (req, res) => {
     try {
         const { id } = req.params;        
@@ -150,5 +212,7 @@ module.exports = {
     getAllReports,
     updateReport,
     deleteReport,
+    addCommentToReport,
+    // getReportById,
     // filterReportsByCategory,
 };
