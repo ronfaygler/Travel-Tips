@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './SingleReport.module.css'; // Make sure this file exists for styling
 import { Link } from "react-router-dom";
+import { deleteReportUtil } from '../../../services/utils';
+import styles from './SingleReport.module.css'; // Make sure this file exists for styling
 
 const SingleReport = ({ report }) => {
     if (!report) return null;
@@ -23,6 +23,18 @@ const SingleReport = ({ report }) => {
         return minutes === 1 ? "לפני דקה" : `לפני ${minutes} דקות`;
       }
       return seconds === 1 ? "לפני שנייה" : `לפני ${seconds} שניות`;
+    };
+
+    const handleDelete = async (e) => {
+        e.stopPropagation(); // Prevent Link navigation
+        e.preventDefault();
+        try {
+            await deleteReportUtil(report._id);
+            // Refresh the page to show updated reports list
+            window.location.reload();
+        } catch (error) {
+            console.error("שגיאה במחיקת המודעה:", error);
+        }
     };
   
     return (
@@ -52,6 +64,8 @@ const SingleReport = ({ report }) => {
                     <Link to={`/update-report/${report._id}`}>
                         <span className={styles.updateReport}>עריכה</span>
                     </Link>
+                
+                    <button onClick={handleDelete} className={styles.deleteReport}>מחק</button>
                 </div>
             </Link>
         </div>

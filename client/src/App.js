@@ -10,14 +10,15 @@ import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 import ReportPage from "./pages/ReportPage/ReportPage";
 import ReportsByCategoryPage from "./pages/ReportsByCategoryPage/ReportsByCategoryPage";
 import UpdateReportPage from "./pages/UpdateReportPage/UpdateReportPage";
+import DeleteReport from "./components/Reports/DeleteReport/DeleteReport";
 
-import CountryPage from "./pages/CountryPage/CountryPage";
-import DatesPage from "./pages/DatesPage/DatesPage";
-import IsNewClientPage from "./pages/IsNewClientPage/IsNewClientPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import WhoTravelPage from "./pages/WhoTravelPage/WhoTravelPage";
-import SportPage from "./pages/SportPage/SportPage";
-import PricePage from "./pages/PricePage/PricePage";
+import CountryPage from "./pages/Insurance/CountryPage/CountryPage";
+import DatesPage from "./pages/Insurance/DatesPage/DatesPage";
+import IsNewClientPage from "./pages/Insurance/IsNewClientPage/IsNewClientPage";
+import LoginPage from "./pages/Insurance/LoginPage/LoginPage";
+import WhoTravelPage from "./pages/Insurance/WhoTravelPage/WhoTravelPage";
+import SportPage from "./pages/Insurance/SportPage/SportPage";
+import PricePage from "./pages/Insurance/PricePage/PricePage";
 
 import Header from "./components/Header";
 
@@ -41,6 +42,7 @@ function App() {
                   <Route path="/:category" exact Component={ReportsByCategoryPage} />
                   <Route path="/update-report/:id" exact Component={UpdateReportPage} /> 
                   <Route path="/כתבה-חדשה" exact Component={UploadReport} />
+                  <Route path="/delete-report/:id" exact Component={DeleteReport} />
 
                   <Route path="/getinsurance" exact Component={CountryPage} />
                   <Route path="/getinsurance/dates" exact Component={DatesPage} />

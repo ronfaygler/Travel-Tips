@@ -1,5 +1,5 @@
 const express = require("express");
-const { createReport, getAllReports, updateReport } = require("../controllers/reportController");
+const { createReport, getAllReports, updateReport, deleteReport } = require("../controllers/reportController");
 
 const router = express.Router();
 
@@ -90,4 +90,7 @@ router.put(
     //   }
     // }
   );
-module.exports = router
+
+router.delete('/delete-report/:id', deleteReport);
+
+module.exports = router;

@@ -15,7 +15,7 @@ const Header = () => {
                 style={{ height: '1rem', width: 'auto' }} // Set height directly
             />        
         </a>
-        <Link to="/getinsurance" className="hover:underline">ביטוח נסיעות</Link>
+        {/* <Link to="/getinsurance" className="hover:underline">ביטוח נסיעות</Link> */}
 
         <Link to="/כרטיסי אשראי" className="hover:underline">כרטיסי אשראי</Link>
         <Link to="/נקודות" className="hover:underline">נקודות</Link>

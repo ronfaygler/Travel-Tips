@@ -32,3 +32,26 @@
     max-height: 400px;
     margin: 10px 0;
   }
+
+  .topRightLink {
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    z-index: 10;
+  }
+
+  .updateReport {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .updateReport:hover {
+    background-color: #0056b3;
+  }
