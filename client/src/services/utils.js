@@ -41,6 +41,19 @@ export const updateReportUtil = async (id, formData) => {
     }
 }
 
+export const deleteReportUtil = async (id) => {
+    try {
+        const res = await axios.delete(`${process.env.REACT_APP_API_URL}/reports/delete-report/${id}`);
+        alert("המודעה נמחקה בהצלחה");
+        // return res.data;
+    }
+    catch (error) {
+        alert("שגיאה במחיקת המודעה", error.message);
+        console.error("שגיאה במחיקת המודעה:", error);
+        throw error;
+    }
+}
+
 // export const filterReports = async () => {
 //   try {
 //     const response = await api.get(`/reports/:category`);

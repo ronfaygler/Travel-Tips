@@ -67,6 +67,18 @@
     cursor: pointer;
 }
 
+.deleteReport {
+    background-color: #dc3545;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
 .reportCard img .loading {
     opacity: 0.5;
     filter: blur(2px);

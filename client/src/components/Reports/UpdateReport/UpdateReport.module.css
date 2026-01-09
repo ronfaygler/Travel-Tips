@@ -1,0 +1,16 @@
+/* Specific styles for UpdateReportPage only */
+
+.mainImagePreview {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+/* Override container max-width for update page if needed */
+.updateContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}

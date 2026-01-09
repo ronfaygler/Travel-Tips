@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import { ReportContext } from "../../../context/ReportContext/ReportContext"
 import { newReport } from "../../../services/utils";
-import styles from "./UploadReport.module.css"
+import commonStyles from "../../../styles/ReportForms.module.css";
+import styles from "./UploadReport.module.css";
 
 const UploadReport = () => {
     const { addNewReport } = useContext(ReportContext);
@@ -74,8 +75,12 @@ const UploadReport = () => {
                     </div>`;
         }
 
-        // Add content
-        html += `<div>${content}</div>`;
+        // Add content with proper line breaks
+        const contentWithBreaks = content.split('\n').map((line, lineIndex) => (
+            line + (lineIndex < content.split('\n').length - 1 ? '<br />' : '')
+        )).join('');
+        
+        html += `<div>${contentWithBreaks}</div>`;
         
         // Add images
         images.forEach((file, id) => {
@@ -88,45 +93,45 @@ const UploadReport = () => {
     };
     
     return (
-        <div className={styles.container}>
-            <h2 className={styles.title}>העלאת כתבה חדשה</h2>
-            {successMessage && <p className={`${styles.message} ${styles.success}`}>{successMessage}</p>}
-            {error && <p className={`${styles.message} ${styles.error}`}>{error}</p>}
+        <div className={`${commonStyles.container} ${styles.uploadContainer}`}>
+            <h2 className={commonStyles.title}>העלאת כתבה חדשה</h2>
+            {successMessage && <p className={`${commonStyles.message} ${commonStyles.success}`}>{successMessage}</p>}
+            {error && <p className={`${commonStyles.message} ${commonStyles.error}`}>{error}</p>}
             
-            <form onSubmit={handleSubmit} className={styles.form}>
-                <label className={styles.label}>
+            <form onSubmit={handleSubmit} className={commonStyles.form}>
+                <label className={commonStyles.label}>
                     כותרת:
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className={styles.input} />
+                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className={commonStyles.input} />
                 </label>
 
-                <label className={styles.label}>
+                <label className={commonStyles.label}>
                     תמונה ראשית:
                     <input 
                         type="file" 
                         accept="image/*" 
                         onChange={(e) => setMainImage(e.target.files[0])} 
-                        className={styles.input} 
+                        className={commonStyles.input} 
                     />
                 </label>
-                <div className={styles.imagePreviewContainer}>
+                <div className={commonStyles.imagePreviewContainer}>
                     {/* New images preview */}
                     {images.map((image) => (
-                        <div key={image.name} className={styles.imagePreview}>
+                        <div key={image.name} className={commonStyles.imagePreview}>
                             <img 
                                 src={URL.createObjectURL(image)} 
                                 alt={`new-${image.name}`}
-                                className={styles.previewImage}
+                                className={commonStyles.previewImage}
                             />
                             <button 
                                 onClick={() => handleRemoveNewImage(image.name)}
-                                className={styles.deleteButton}
+                                className={commonStyles.deleteButton}
                             >
                                 ×
                             </button>
                         </div>
                     ))}
                 </div>
-                <label className={styles.label}>
+                <label className={commonStyles.label}>
                     העלאת תמונות לתוכן:
                     <input 
                         type="file" 
@@ -137,42 +142,43 @@ const UploadReport = () => {
                             setImages(prev => [...prev, ...files]);
                             // setImages(Array.from(e.target.files))
                         }} 
-                        className={styles.input} 
+                        className={commonStyles.input} 
                     />
                 </label>
 
-                <label className={styles.label}>
+                <label className={commonStyles.label}>
                     תוכן הכתבה:
+                    <p style={{ fontSize: '12px', color: '#666' }}>הוסף [0], [1] וכו' היכן שברצונך להכניס תמונה</p>
                     <textarea
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         required
-                        className={styles.textarea}
+                        className={commonStyles.textarea}
                         placeholder="כתוב את התוכן כאן, והוסף [0], [1] וכו' היכן שברצונך להכניס תמונה"
                     />
                 </label>
 
-                <label className={styles.label}>
+                <label className={commonStyles.label}>
                     תיאור קצר:
-                    <input type="text" value={shortDescription} onChange={(e) => setShortDescription(e.target.value)} required className={styles.input} />
+                    <input type="text" value={shortDescription} onChange={(e) => setShortDescription(e.target.value)} required className={commonStyles.input} />
                 </label>
-                <label className={styles.label}>
+                <label className={commonStyles.label}>
                     קטגוריה:
-                    <select value={category} onChange={(e) => setCategory(e.target.value)} className={styles.select}>
+                    <select value={category} onChange={(e) => setCategory(e.target.value)} className={commonStyles.select}>
                         <option value="חדשות">חדשות</option>
                         <option value="מלונות">מלונות</option>
                         <option value="נקודות">נקודות</option>
                         <option value="כרטיסי אשראי">כרטיסי אשראי</option>
                     </select>
                 </label>
-                <label className={styles.label}>
+                <label className={commonStyles.label}>
                     שם הכתב:
-                    <input type="text" value={writer} onChange={(e) => setWriter(e.target.value)} required className={styles.input} />
+                    <input type="text" value={writer} onChange={(e) => setWriter(e.target.value)} required className={commonStyles.input} />
                 </label>
-                <button type="submit" className={`${styles.button} ${styles.submitButton}`}>העלה כתבה</button>
-                <button type="button" onClick={handleReset} className={`${styles.button} ${styles.resetButton}`}>איפוס</button>
+                <button type="submit" className={`${commonStyles.button} ${commonStyles.submitButton}`}>העלה כתבה</button>
+                <button type="button" onClick={handleReset} className={`${commonStyles.button} ${commonStyles.resetButton}`}>איפוס</button>
             </form>
-            <div className={styles.preview}>
+            <div className={styles.uploadContainer}>
                 <h3>תצוגה מקדימה של הכתבה:</h3>
                 <div dangerouslySetInnerHTML={{ __html: getContentWithImages() }} />
             </div>

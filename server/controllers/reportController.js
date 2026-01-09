@@ -118,6 +118,18 @@ const getAllReports = async (req, res) => {
     }
 }
 
+const deleteReport = async (req, res) => {
+    try {
+        const { id } = req.params;        
+        await Report.findByIdAndDelete(id);
+        console.log("Report deleted successfully");
+        res.status(200).json({ message: 'Report deleted successfully' });
+    } catch (err) {
+        console.error('Error deleting report:', err);
+        res.status(500).json({ error: 'Failed to delete report', details: err.message });
+    }
+}
+
 // const filterReportsByCategory = async (req, res) => {
 //     try {
 //         const category = req.params.category;
@@ -137,5 +149,6 @@ module.exports = {
     createReport,
     getAllReports,
     updateReport,
+    deleteReport,
     // filterReportsByCategory,
 };
