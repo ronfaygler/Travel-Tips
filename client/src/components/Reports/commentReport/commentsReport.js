@@ -10,7 +10,7 @@ const CommentsReport = ({ comments }) => {
                         <span className={styles.author}>{comment.author}</span>
                         {comment.createdAt && (
                             <span className={styles.timestamp}>
-                                {new Date(comment.createdAt).toLocaleDateString('he-IL')}
+                                {new Date(comment.createdAt).toLocaleDateString('he-IL')} {new Date(comment.createdAt).toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'})}
                             </span>
                         )}
                     </div>

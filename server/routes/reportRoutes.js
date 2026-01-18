@@ -1,5 +1,5 @@
 const express = require("express");
-const { createReport, getAllReports, updateReport, addCommentToReport, deleteReport } = require("../controllers/reportController");
+const { createReport, getAllReports, updateReport, addCommentToReport, deleteReport, getReportById } = require("../controllers/reportController");
 
 const router = express.Router();
 
@@ -68,7 +68,7 @@ router.put('/add-comment-to-report/:id', addCommentToReport);
 
 router.delete('/delete-report/:id', deleteReport);
 
-// // Get single report by ID (must be last to not catch other routes)
-// router.get('/:id', getReportById);
+// Get single report by ID (must be last to not catch other routes)
+router.get('/:id', getReportById);
 
 module.exports = router;

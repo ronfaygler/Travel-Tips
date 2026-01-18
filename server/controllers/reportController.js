@@ -120,23 +120,23 @@ const getAllReports = async (req, res) => {
     }
 }
 
-// const getReportById = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         console.log('getReportById called with ID:', id);
-//         const report = await Report.findById(id);
-//         console.log('Found report:', report);
-//         if (!report) {
-//             console.log('Report not found, returning 404');
-//             return res.status(404).json({ error: 'Report not found' });
-//         }
-//         console.log('Returning report with 200');
-//         res.status(200).json(report);
-//     } catch (err) {
-//         console.error('Error fetching report by ID:', err);
-//         res.status(500).json({ error: 'Failed to fetch report', details: err.message });
-//     }
-// }
+const getReportById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log('getReportById called with ID:', id);
+        const report = await Report.findById(id).populate('comments');
+        console.log('Found report:', report);
+        if (!report) {
+            console.log('Report not found, returning 404');
+            return res.status(404).json({ error: 'Report not found' });
+        }
+        console.log('Returning report with 200');
+        res.status(200).json(report);
+    } catch (err) {
+        console.error('Error fetching report by ID:', err);
+        res.status(500).json({ error: 'Failed to fetch report', details: err.message });
+    }
+}
 
 const addCommentToReport = async (req, res) => {
     try {
@@ -213,6 +213,6 @@ module.exports = {
     updateReport,
     deleteReport,
     addCommentToReport,
-    // getReportById,
+    getReportById,
     // filterReportsByCategory,
 };

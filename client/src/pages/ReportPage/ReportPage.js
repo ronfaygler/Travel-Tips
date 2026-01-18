@@ -1,16 +1,33 @@
 import { useParams, useLocation, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from "./ReportPage.module.css";
 import AddCommentReport from '../../components/Reports/commentReport/AddCommentReport';
 import CommentsReport from '../../components/Reports/commentReport/commentsReport';
 
 const ReportPage = () => {
-    const location = useLocation();
-    const report = location.state?.report;
     const params = useParams();
-    const [comments, setComments] = useState(report?.comments || []);
-    const [currentReport, setCurrentReport] = useState(report);
-    
+    const [comments, setComments] = useState([]);
+    const [currentReport, setCurrentReport] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchReport = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/reports/${params.id}`);
+                const freshReport = response.data;
+                setCurrentReport(freshReport);
+                setComments(freshReport.comments || []);
+            } catch (error) {
+                console.error('Error fetching report:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchReport();
+    }, [params.id]);
+
     const handleCommentAdded = (newComments) => {
         setComments(newComments);
         // Also update the report state to keep everything in sync
@@ -21,6 +38,10 @@ const ReportPage = () => {
             });
         }
     };
+
+    if (loading) {
+        return <h1>טוען...</h1>;
+    }
 
     if (!currentReport) {
         return <h1>הכתבה לא נמצאה</h1>;
