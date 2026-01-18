@@ -13,6 +13,12 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    replies: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Comment',
+        required: false,
+        default: [],
+    },
     createdAt: {
         type: Date,
         default: Date.now,
