@@ -1,0 +1,136 @@
+/* put in center */
+.addComment {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 60%;
+    gap: 4px;
+    margin: 15px auto 65px auto;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.addComment textarea {
+    width: 98%;
+    padding: 6px;
+    margin: 0px auto 5px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    min-height: 40px;
+    resize: vertical;
+}
+
+/* put next to each other */
+.inputContainer {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 3px 0 20px 20px;
+    width: 100%;
+}
+
+.addComment input {
+    width: 50%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 35px;
+    box-sizing: border-box;
+}
+
+.addComment button {
+    width: 25%;
+    margin: 15px auto 10px;
+    padding: 6px;
+    border: 1px solid #2563eb;
+    border-radius: 5px;
+    background-color: #2563eb;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    height: 32px;
+    font-weight: 600;
+}
+
+.addComment button:hover {
+    background-color: #0056b3;
+}
+
+.comments {
+    margin: 60px 0px 10px 0px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.comments h1 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.comments p {
+    color: #161616;
+    margin-bottom: 2px;
+    margin-top: 0;
+    padding-right: 6px;
+    line-height: 1.2;
+    font-size: 0.9em;
+}
+
+.comments div {
+    background-color: #fff;
+    padding: 6px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+    transition: box-shadow 0.2s ease;
+}
+
+.comments div:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.comments div:last-child {
+    margin-bottom: 0;
+}
+
+.commentMeta {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 2px;
+    font-size: 0.8em;
+    gap: 4px;
+    flex-direction: column;
+    direction: ltr;
+}
+
+.author {
+    font-weight: bold;
+    color: #333;
+}
+
+.email {
+    color: #666;
+    font-size: 0.8em;
+}
+
+.timestamp {
+    color: #999;
+    font-size: 0.75em;
+    font-style: italic;
+}
+
+.addComment button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}

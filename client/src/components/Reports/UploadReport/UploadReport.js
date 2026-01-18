@@ -44,6 +44,7 @@ const UploadReport = () => {
         formData.append("category", category);
         formData.append("writer", writer);
         formData.append("mainImage", mainImage);
+        formData.append("comments", []);
 
         // Append each additional content image
         images.forEach((imgFile) => {

@@ -37,6 +37,11 @@ const reportSchema = new mongoose.Schema({
       }
     ],
     required: false
+  },
+  comments: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Comment',
+    required: false
   }
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
