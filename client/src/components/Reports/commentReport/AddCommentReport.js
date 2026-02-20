@@ -2,7 +2,7 @@ import styles from "./commentReport.module.css";
 import { useState } from "react";
 import { addCommentToReportUtil } from "../../../services/utils";
 
-const AddCommentReport = ({ report, onCommentAdded }) => {
+const AddCommentReport = ({ report, onCommentAdded, parentCommentId }) => {
     const [successMessage, setSuccessMessage] = useState("");
     
     const handleSubmit = async (e) => {
@@ -22,7 +22,7 @@ const AddCommentReport = ({ report, onCommentAdded }) => {
             }
             
             // Call API to add comment
-            const response = await addCommentToReportUtil(report._id, newComment);
+            const response = await addCommentToReportUtil(report._id, newComment, parentCommentId);
             
             // Notify parent component
             if (onCommentAdded) {

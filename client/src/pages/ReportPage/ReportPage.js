@@ -115,7 +115,7 @@ const ReportPage = () => {
             </p>
         </div>
         <div className='report-comments'>
-            <CommentsReport comments={comments} />
+            <CommentsReport comments={comments} report={currentReport} onCommentAdded={handleCommentAdded} />
             <AddCommentReport report={currentReport} onCommentAdded={handleCommentAdded} />
         </div>
         <div className='report-footer'>

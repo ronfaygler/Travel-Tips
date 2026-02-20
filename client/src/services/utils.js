@@ -41,17 +41,17 @@ export const updateReportUtil = async (id, formData) => {
     }
 }
 
-export const addCommentToReportUtil = async (reportId, newComment) => {
+export const addCommentToReportUtil = async (reportId, newComment, parentCommentId) => {
     try {
-        const res = await axios.put(`${process.env.REACT_APP_API_URL}/reports/add-comment-to-report/${reportId}`, {
-            newComment
-        });
+        const payload = parentCommentId ? { newComment, parentCommentId } : { newComment };
+        const res = await axios.put(`${process.env.REACT_APP_API_URL}/reports/add-comment-to-report/${reportId}`, payload);
         return res.data;
     } catch (error) {
         console.error("שגיאה בהוספת התגובה:", error);
         throw error;
     }
 }
+
 export const deleteReportUtil = async (id) => {
     try {
         const res = await axios.delete(`${process.env.REACT_APP_API_URL}/reports/delete-report/${id}`);

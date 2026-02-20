@@ -124,7 +124,19 @@ const getReportById = async (req, res) => {
     try {
         const { id } = req.params;
         console.log('getReportById called with ID:', id);
-        const report = await Report.findById(id).populate('comments');
+        const report = await Report.findById(id)
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'replies',
+                    populate: {
+                        path: 'replies',
+                        populate: {
+                            path: 'replies',
+                        },
+                    },
+                },
+            });
         console.log('Found report:', report);
         if (!report) {
             console.log('Report not found, returning 404');
@@ -141,7 +153,7 @@ const getReportById = async (req, res) => {
 const addCommentToReport = async (req, res) => {
     try {
         const { id } = req.params;
-        const { newComment } = req.body;
+        const { newComment, parentCommentId } = req.body;
         
         // Validate input
         if (!newComment || !newComment.text || !newComment.author || !newComment.email) {
@@ -157,18 +169,44 @@ const addCommentToReport = async (req, res) => {
         const comment = await Comment.create({
             text: newComment.text,
             author: newComment.author,
-            email: newComment.email
+            email: newComment.email,
+            replies: []
         });
-        
-        // Add comment reference to report
-        if (!report.comments) {
-            report.comments = [];
+
+        if (parentCommentId) {
+            const parentComment = await Comment.findById(parentCommentId);
+            if (!parentComment) {
+                return res.status(404).json({ error: 'Parent comment not found' });
+            }
+
+            if (!parentComment.replies) {
+                parentComment.replies = [];
+            }
+            parentComment.replies.push(comment._id);
+            await parentComment.save();
+        } else {
+            // Add comment reference to report
+            if (!report.comments) {
+                report.comments = [];
+            }
+            report.comments.push(comment._id);
+            await report.save();
         }
-        report.comments.push(comment._id);
-        await report.save();
         
         // Get updated report with populated comments
-        const updatedReport = await Report.findById(id).populate('comments');
+        const updatedReport = await Report.findById(id)
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'replies',
+                    populate: {
+                        path: 'replies',
+                        populate: {
+                            path: 'replies',
+                        },
+                    },
+                },
+            });
         
         res.status(200).json({ 
             message: 'Comment added successfully',
