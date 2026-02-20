@@ -9,7 +9,7 @@ A full-stack web application for managing reports about tips for traveling.
 - **File Uploads**: Support for main images and multiple images per report.
 - **Responsive UI**: Clean, compact UI with right-aligned author/date metadata.
 
-![Screenshot of homepage](C:\Users\ronfa\fullStackProjects\insurance_web\client\src\assets\images\homePage.png)
+![Screenshot of homepage](client/src/assets/images/homePage.png)
 
 ## Tech Stack
 
