@@ -1,8 +1,8 @@
-# Travel-Tips Web
+# 🌍✈️ Travel-Tips Web
 
 A full-stack web application for managing reports about tips for traveling.
 
-## Features
+## ✨ Features
 
 - **Reports Management**: Create, view, update, and delete reports.
 - **Comments & Nested Replies**: Add comments to reports and reply to comments (including reply-to-reply).
@@ -11,7 +11,7 @@ A full-stack web application for managing reports about tips for traveling.
 
 ![Screenshot of homepage](client/src/assets/images/homePage.png)
 
-## Tech Stack
+## 🧰 Tech Stack
 
 ### Frontend
 - React
@@ -25,7 +25,7 @@ A full-stack web application for managing reports about tips for traveling.
 - MongoDB (Mongoose)
 - Multer (file uploads)
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 ./
@@ -56,7 +56,7 @@ A full-stack web application for managing reports about tips for traveling.
 └─ package-lock.json
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js
@@ -86,7 +86,7 @@ A full-stack web application for managing reports about tips for traveling.
    cd client && npm start
    ```
 
-## API Endpoints
+## 🔌 API Endpoints
 
 - `GET /api/reports` – Get all reports
 - `GET /api/reports/:id` – Get a single report (with populated comments and replies)
@@ -96,7 +96,7 @@ A full-stack web application for managing reports about tips for traveling.
 - `PUT /api/reports/add-comment-to-report/:id` – Add a comment or reply
   - Body: `{ newComment, parentCommentId? }`
 
-## Data Models
+## 🧩 Data Models
 
 ### Report
 - title
@@ -115,18 +115,18 @@ A full-stack web application for managing reports about tips for traveling.
 - createdAt
 - replies (Array of ObjectId references to other Comment documents)
 
-## Comments & Replies
+## 💬 Comments & Replies
 
 - Top-level comments are stored in `report.comments`.
 - Replies are stored in `comment.replies` (self-referencing).
 - UI supports unlimited nesting depth (server populates up to 3 levels by default; can be extended).
 
-## Styling Notes
+## 🎨 Styling Notes
 
 - All comment UI is in `client/src/components/Reports/commentReport/commentReport.module.css`.
 - Replies are nested with indentation and a subtle border.
 - Author and timestamp are right-aligned; Reply button on the left.
 
-## License
+## 📄 License
 
 Private. All rights reserved.
